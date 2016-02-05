@@ -1,32 +1,33 @@
 var React = require('react-native');
 var Main = require('./App/Components/Main');
 
-window.React = React;
 
 var {
-  AppRegistry,
-  StyleSheet,
-  NavigatorIOS,
-} = React;
-
-var NoteTaker = React.createClass({
-  render: function() {
-    return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Github Note Taker',
-          component: Main,
-        }}/>
-    );
-  }
-});
+    AppRegistry,
+    StyleSheet,
+    Text,
+    NavigatorIOS,
+    View,
+    } = React;
 
 var styles = StyleSheet.create({
-  container: {
+  container:{
     flex: 1,
     backgroundColor: '#111111'
   },
 });
 
-AppRegistry.registerComponent('notetaker', () => NoteTaker);
+class githubNotetaker extends React.Component {
+  render() {
+    return (
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Github NoteTaker',
+          component: Main
+        }} />
+    );
+  }
+}
+
+AppRegistry.registerComponent('githubNotetaker', () => githubNotetaker);

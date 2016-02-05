@@ -1,15 +1,14 @@
 var React = require('react-native');
 var Profile = require('./Profile');
-var api = require('../Utils/api');
 var Repositories = require('./Repositories');
+var api = require('../Utils/api');
 var Notes = require('./Notes');
 
 var {
   Text,
   View,
-  NavigatorIOS,
-  Image,
   StyleSheet,
+  Image,
   TouchableHighlight
 } = React;
 
@@ -29,7 +28,7 @@ var styles = StyleSheet.create({
 });
 
 class Dashboard extends React.Component{
-  makeBackground(btn){
+   makeBackground(btn){
     var obj = {
       flexDirection: 'row',
       alignSelf: 'stretch',
@@ -53,34 +52,34 @@ class Dashboard extends React.Component{
     })
   }
   goToRepos(){
-    api.getRepos(this.props.userInfo.login)
-      .then((jsonRes) => {
-        this.props.navigator.push({
-          component: Repositories,
-          title: "Repositories Page",
-          passProps: {
-            repos: jsonRes,
-            userInfo: this.props.userInfo
-          }
-        });
-      })
+      api.getRepos(this.props.userInfo.login)
+          .then((res) => {
+              this.props.navigator.push({
+                  component: Repositories,
+                  title: 'Repos Page',
+                  passProps: {
+                      userInfo: this.props.userInfo,
+                      repos: res
+                  }
+              });
+          });
   }
   goToNotes(){
-    api.getNotes(this.props.userInfo.login)
-      .then((jsonRes) => {
-        jsonRes = jsonRes || {};
-        this.props.navigator.push({
-          component: Notes,
-          title: 'Notes',
-          passProps: {
-            notes: jsonRes,
-            userInfo: this.props.userInfo
-          }
-        });
-      });
+      api.getNotes(this.props.userInfo.login)
+          .then((jsonRes) => {
+              jsonRes = jsonRes || {};
+              this.props.navigator.push({
+                  component: Notes,
+                  title: 'Notes',
+                  passProps: {
+                      notes: jsonRes,
+                      userInfo: this.props.userInfo
+                  }
+              });
+          });
   }
-  render(){
-    return (
+render(){
+  return (
       <View style={styles.container}>
         <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
         <TouchableHighlight
@@ -103,11 +102,7 @@ class Dashboard extends React.Component{
         </TouchableHighlight>
       </View>
     )
-  }
-};
-
-Dashboard.propTypes = {
-  userInfo: React.PropTypes.object.isRequired
 }
+};
 
 module.exports = Dashboard;

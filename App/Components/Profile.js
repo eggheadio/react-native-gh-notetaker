@@ -45,7 +45,7 @@ class Profile extends React.Component{
         return (
           <View key={index}>
             <View style={styles.rowContainer}>
-              <Text style={styles.rowTitle}>{this.getRowTitle(userInfo, item)}</Text>
+              <Text style={styles.rowTitle}> {this.getRowTitle(userInfo, item)} </Text>
               <Text style={styles.rowContent}> {userInfo[item]} </Text>
             </View>
             <Separator />

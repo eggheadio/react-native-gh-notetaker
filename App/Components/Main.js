@@ -57,76 +57,68 @@ var styles = StyleSheet.create({
 
 class Main extends React.Component{
   constructor(props){
-    super(props)
+    super(props);
     this.state = {
       username: '',
       isLoading: false,
       error: false
     }
   }
-  handleChange(e){
+  handleChange(event){
     this.setState({
-      username: e.nativeEvent.text
+      username: event.nativeEvent.text
     })
   }
-  handleResponse(res){
-    if(res.message === 'Not Found'){
-      this.setState({
-        error: 'User not found',
-        isLoading: false
-      })
-    } else {
-      this.props.navigator.push({
-        title: res.name || 'Select an Option',
-        component: Dashboard,
-        passProps: {userInfo: res}
-      });
-      this.setState({
-        isLoading: false,
-        error: false,
-        username: ''
-      });
-    }
-  }
   handleSubmit(){
+    // update our indicatorIOS spinner
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
     api.getBio(this.state.username)
-      .then((jsonRes) => this.handleResponse(jsonRes))
-      .catch((err) => {
-        this.setState({
-          isLoading: false,
-          error: `There was an error: ${err}`
-        })
-      })
+      .then((res) => {
+        if(res.message === 'Not Found'){
+          this.setState({
+            error: 'User not found',
+            isLoading: false
+          })
+        } else {
+          this.props.navigator.push({
+            title: res.name || "Select an Option",
+            component: Dashboard,
+            passProps: {userInfo: res}
+          });
+          this.setState({
+            isLoading: false,
+            error: false,
+            username: ''
+          })
+        }
+      });
   }
   render() {
     var showErr = (
       this.state.error ? <Text> {this.state.error} </Text> : <View></View>
     );
-    return (
+    return(
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>
-          Search for a Github User
-        </Text>
-        <TextInput
-          style={styles.searchInput}
-          value={this.state.username}
-          onChange={this.handleChange.bind(this)} />
+      <Text style={styles.title}> Search for a Github User </Text>
+      <TextInput
+        style={styles.searchInput}
+        value={this.state.username}
+        onChange={this.handleChange.bind(this)} />
         <TouchableHighlight
           style={styles.button}
           onPress={this.handleSubmit.bind(this)}
           underlayColor="white">
-            <Text style={styles.buttonText}>SEARCH</Text>
+          <Text style={styles.buttonText}> SEARCH </Text>
         </TouchableHighlight>
         <ActivityIndicatorIOS
           animating={this.state.isLoading}
           color="#111"
-          size="large"> </ActivityIndicatorIOS>
+          size="large"></ActivityIndicatorIOS>
         {showErr}
       </View>
-    );
+      )
   }
 };
 
