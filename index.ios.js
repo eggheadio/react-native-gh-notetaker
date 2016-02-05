@@ -1,13 +1,14 @@
 var React = require('react-native');
 var Main = require('./App/Components/Main');
 
+
 var {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  NavigatorIOS,
-  View,
-} = React;
+    AppRegistry,
+    StyleSheet,
+    Text,
+    NavigatorIOS,
+    View,
+    } = React;
 
 var styles = StyleSheet.create({
   container:{
@@ -16,18 +17,17 @@ var styles = StyleSheet.create({
   },
 });
 
-class githubNotetaker extends React.Component{
+class githubNotetaker extends React.Component {
   render() {
     return (
       <NavigatorIOS
-      style={styles.container}
+        style={styles.container}
         initialRoute={{
           title: 'Github NoteTaker',
-          component: Main 
+          component: Main
         }} />
     );
   }
-};
-
+}
 
 AppRegistry.registerComponent('githubNotetaker', () => githubNotetaker);
