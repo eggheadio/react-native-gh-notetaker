@@ -110,6 +110,7 @@ class Notes extends React.Component{
     return (
       <View style={styles.container}>
           <ListView
+            enableEmptSections={true}
             dataSource={this.state.dataSource}
             renderRow={this.renderRow}
             renderHeader={() => <Badge userInfo={this.props.userInfo}/>} />
